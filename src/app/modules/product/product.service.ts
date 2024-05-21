@@ -6,9 +6,19 @@ const createProductData = async (product: Product) => {
   return result;
 };
 
-const getAllProducts = async () => {
-  const result = await productModel.find();
-  return result;
+const getAllProducts = async (searchTerm?: string) => {
+  if (searchTerm) {
+    const result = await productModel.find({
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { category: { $regex: searchTerm, $options: 'i' } },
+      ],
+    });
+    return result;
+  } else {
+    const result = await productModel.find();
+    return result;
+  }
 };
 
 const getSingleProduct = async (id: string) => {
