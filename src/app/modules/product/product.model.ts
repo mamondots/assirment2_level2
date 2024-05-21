@@ -1,10 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { Product, Variants } from './product.interface';
-
-const variantsSchema = new Schema<Variants>({
-  type: { type: String },
-  value: { type: String },
-});
+import { Product } from './product.interface';
 
 const productSchema = new Schema<Product>({
   name: { type: String },
@@ -12,7 +7,12 @@ const productSchema = new Schema<Product>({
   price: { type: Number },
   category: { type: String },
   tags: [{ type: String }],
-  variants: [variantsSchema],
+  variants: [
+    {
+      type: { type: String },
+      value: { type: String },
+    },
+  ],
   inventory: {
     quantity: { type: String },
     inStock: { type: String },
