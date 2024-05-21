@@ -14,11 +14,15 @@ const createOrder = async (req: Request, res: Response) => {
 };
 
 const getAllOrder = async (req: Request, res: Response) => {
+  const email: string = req.query.email as string;
   try {
-    const result = await orderService.getAllOrder();
+    const result = await orderService.getAllOrder(email);
+    const message = email
+      ? `order matching search term '${email}' fetched successfully!`
+      : 'getting all order successfully';
     res.status(200).json({
       success: true,
-      message: 'getting all order successfully',
+      message: message,
       data: result,
     });
   } catch (error) {}
