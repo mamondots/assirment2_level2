@@ -24,11 +24,11 @@ const createOrder = async (order: Order) => {
   product.inventory.inStock = product.inventory.quantity > 0;
 
   // Update product and order data
-  // const updatedProduct = await productModel.findByIdAndUpdate(
-  //   productId,
-  //   product,
-  //   { new: true },
-  // );
+  const updatedProduct = await productModel.findByIdAndUpdate(
+    productId,
+    product,
+    { new: true },
+  );
   const newOrder = await orderModel.create(order);
   return { order: newOrder };
 };
