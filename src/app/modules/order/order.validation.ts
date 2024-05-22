@@ -1,8 +1,10 @@
-const { z } = require('zod');
+import { z } from 'zod';
 
-const orderSchema = z.object({
+const orderValidationSchema = z.object({
   email: z.string().email(),
   productId: z.string().nonempty(),
   price: z.number().positive(),
   quantity: z.number().int().positive(),
 });
+
+export default orderValidationSchema;

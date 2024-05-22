@@ -1,18 +1,27 @@
 import { Request, Response } from 'express';
 import { orderService } from './order.service';
+import orderValidationSchema from './order.validation';
 
 const createOrder = async (req: Request, res: Response) => {
   try {
     const orderData = req.body;
 
-    const result = await orderService.createOrder(orderData);
+    const validationparsedData = orderValidationSchema.parse(orderData);
+
+    const result = await orderService.createOrder(validationparsedData);
 
     res.status(200).json({
       success: true,
       message: 'order is created successfully',
       data: result.order,
     });
-  } catch (error) {}
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: 'something wrong here',
+      error: error,
+    });
+  }
 };
 
 const getAllOrder = async (req: Request, res: Response) => {
@@ -27,7 +36,13 @@ const getAllOrder = async (req: Request, res: Response) => {
       message: message,
       data: result,
     });
-  } catch (error) {}
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: 'something wrong here',
+      error: error,
+    });
+  }
 };
 
 export const orderController = {
